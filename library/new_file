@@ -3,12 +3,10 @@
 #include <algorithm>
 #include <time.h>
 #include <iostream>
-#include "../includes_usr/fileIO.h"
-#include "../includes_usr/datastructures.h"
 #include "../includes_usr/constants.h"
 #include "../includes_usr/library.h"
-
-
+#include "../includes_usr/datastructures.h"
+#include "../includes_usr/fileIO.h"
 using namespace std;
 
 //NOTE: please ensure patron and book data are loaded from disk before calling the following
@@ -19,7 +17,7 @@ using namespace std;
  * clear books and patrons containers
  * then reload them from disk 
  */
-//make vectors like the ones in fileIO
+
 std::vector<book> books;
 std::vector<patron> patrons;
 
