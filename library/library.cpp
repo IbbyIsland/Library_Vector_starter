@@ -70,7 +70,7 @@ reloadAllData();
 
 bool bookExistsInBookfile = false;
 
-bool patronCanCheckout = false;
+bool patronCanCheckout = true;
 
 bool patronExists = false;
 
@@ -89,8 +89,10 @@ for (unsigned int var = 0; var < patrons.size(); var++){
 			patronExists = true;
 		}
 
-		if (patrons[var].number_books_checked_out < MAX_BOOKS_ALLOWED_OUT){
-			patronCanCheckout = true;
+		if (patrons[var].number_books_checked_out == MAX_BOOKS_ALLOWED_OUT){
+			patronCanCheckout = false;
+			break;
+
 		}
 }
 
@@ -100,6 +102,7 @@ if (bookExistsInBookfile == false){
 
 if (patronCanCheckout ==false){
 	return TOO_MANY_OUT;
+
 }
 
 if (patronExists == false){
@@ -111,8 +114,6 @@ if (books[bookid].state != IN){
 
 }
 
-//set book and patron statuses
-//loaned out to the patronID :
 books[bookid].loaned_to_patron_id = patronid;
 //checked out:
 books[bookid].state = OUT;
@@ -234,12 +235,21 @@ savePatrons(patrons, PATRONFILE.c_str());
 return patronObject.patron_id;
 }
 
+
+
+
+
+
+//bool diff_files(string testfile, s)
+
 /*
  * the number of books in the books container
  * (ie. if 3 books returns 3)
  * 
  */
 int numbBooks(){
+
+reloadAllData();
 	int numberOfBooks = 0;
 
 			for (unsigned int i = 0; i < books.size(); i++){
@@ -253,6 +263,8 @@ return numberOfBooks;
  * (ie. if 3 patrons returns 3)
  */
 int numbPatrons(){
+
+	reloadAllData();
 
 int numberOfPatrons = 0;
 
@@ -272,9 +284,17 @@ return numberOfPatrons;
  */
 int howmanybooksdoesPatronHaveCheckedOut(int patronid){
 
-return patrons[patronid].number_books_checked_out;
 
+
+
+if (patrons[patronid].number_books_checked_out == MAX_BOOKS_ALLOWED_OUT){
+	return MAX_BOOKS_ALLOWED_OUT;
 }
+
+
+return SUCCESS;
+}
+
 
 /* search through patrons container to see if patronid is there
  * if so returns the name associated with patronid in the variable name
@@ -284,17 +304,21 @@ return patrons[patronid].number_books_checked_out;
  */
 int whatIsPatronName(std::string &name,int patronid){
 
+
+bool PatronExists = false;
+
+
+
 for (unsigned int var = 0; var < patrons.size(); var++){
 if (patronid == patrons[var].patron_id && name == patrons[var].name){
-return true;
-}
-else {
-return PATRON_NOT_ENROLLED;
-
+PatronExists = true;
 }
 
-}
 
+}
+if (PatronExists == false){
+	return PATRON_NOT_ENROLLED;
+}
 
 	return SUCCESS;
 }

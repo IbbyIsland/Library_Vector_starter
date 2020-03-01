@@ -69,10 +69,13 @@ if (myfile.is_open() == false) {
 		}
 		ss.str(line);
 
-//initialize bookObject
+//initialize bookObject properties
 		bookObject.title = "";
+
 		bookObject.author = "";
+
 		bookObject.loaned_to_patron_id = 0;
+
 		bookObject.state = UNKNOWN;
 
 
@@ -132,7 +135,9 @@ if (myfile.is_open() == false) {
 		return COULD_NOT_OPEN_FILE;
 	}
 
-	//NO_BOOKS_IN_LIBRARY if there are 0 entries books (do not create file)
+
+
+//test case for bookfile.
 	if (books.size() == 0) {
 		return NO_BOOKS_IN_LIBRARY;
 	}
@@ -140,7 +145,8 @@ if (myfile.is_open() == false) {
 
 	string mybooks;
 
-	//Goes through the vector and prints the patron's info
+	//Print  the patron info
+
 	for (unsigned int var = 0; var < books.size(); var++) {
 		mybooks = to_string(books[var].book_id) + "," + books[var].title + ","
 
@@ -171,7 +177,7 @@ if (myfile.is_open() == false) {
  * 			SUCCESS if all data is loaded
  * */
 int loadPatrons(std::vector<patron> &patrons, const char* filename) {
-	//Clears the Patron Vector
+//clear patrons
 
 patrons.clear();
 
@@ -183,15 +189,13 @@ ifstream myfile;
 
 myfile.open(filename);
 
-	//COULD_NOT_OPEN_FILE if cannot open filename
+
 
 
 if(myfile.is_open() == false) {
 	return COULD_NOT_OPEN_FILE;}
 
-
-
-	//Variables needed for the reading
+    //just like loading books
 	std::string line;
 
 
@@ -205,7 +209,7 @@ if(myfile.is_open() == false) {
 
 
 
-	//Reading from the file to the vector
+//read in the same as loading books
 
 
 while (!myfile.eof()) {
@@ -233,7 +237,7 @@ while (!myfile.eof()) {
 
 		patronObject.number_books_checked_out = NONE;
 
-		//uses stoi to convert string to integer
+		//use stoi
 		getline(ss, token, ',');
 		patronObject.patron_id = stoi(token);
 
